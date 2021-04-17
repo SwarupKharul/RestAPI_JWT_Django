@@ -14,7 +14,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('', include_docs_urls(title='BlogAPI')),
+    path('', include_docs_urls(title="API Docs")),
     path('docs/', get_schema_view(
         title="BlogAPI",
         description="API for the BlogAPI",
