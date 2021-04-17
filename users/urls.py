@@ -5,7 +5,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('create/', CustomUserCreate.as_view(), name="create_user"),
-    path('profile/', Profile.as_view(), name="profile"),
+    path('profile/<int:pk>/', Profile.as_view(), name="profile"),
     path('logout/blacklist/', BlacklistTokenUpdateView.as_view(),
          name='blacklist')
 ]

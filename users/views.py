@@ -43,9 +43,8 @@ class BlacklistTokenUpdateView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class Profile(generics.RetrieveUpdateDestroyAPIView, ProfileEditPermission):
-    permission_classes = [ProfileEditPermission]
+class Profile(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NewUser.objects.all()
+    permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSerializer
-    def get_queryset(self):
-        user = self.request.user
-        return NewUser.objects.filter(user_name=user)
+
