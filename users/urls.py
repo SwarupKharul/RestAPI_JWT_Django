@@ -1,9 +1,9 @@
-from django.urls import path
-from .views import CustomUserCreate, BlacklistTokenUpdateView, Profile, ProfileList
+from django.urls import include, path
+from .views import UserProfileListCreateView, userProfileDetailView
 
 app_name = 'users'
 
 urlpatterns = [
-    path('', ProfileList.as_view(), name="profilelist"),
-    path('<int:pk>/', Profile.as_view(), name="profile"),
+    path("all-profiles",UserProfileListCreateView.as_view(),name="all-profiles"),
+    path("profile/<int:pk>",userProfileDetailView.as_view(),name="profile"),
 ]
