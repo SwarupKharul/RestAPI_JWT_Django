@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'users',
+    'djoser',
     'rest_framework_simplejwt.token_blacklist',
 ]
 
@@ -131,6 +132,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
+        'rest_framework.authentication.BasicAuthentication',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',

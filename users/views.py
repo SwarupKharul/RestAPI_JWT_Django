@@ -12,10 +12,8 @@ class ProfileEditPermission(BasePermission):
     message = 'Editing profile is restricted to the author only.'
 
     def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-
-        return obj.author == request.user
+        print(request.user)
+        return obj == request.user or request.user.is_staff
 
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
@@ -43,8 +41,37 @@ class BlacklistTokenUpdateView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class Profile(generics.RetrieveUpdateDestroyAPIView):
+class ProfileList(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = NewUser.objects.all()
-    permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSerializer
+
+
+
+
+class Profile(generics.RetrieveUpdateDestroyAPIView, ProfileEditPermission):
+    permission_classes = [IsAuthenticated]
+    queryset = NewUser.objects.all()
+    serializer_class = ProfileSerializer
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     # There is nothing to validate or save here. Instead, we just want the
+    #     # serializer to handle turning our `User` object into something that
+    #     # can be JSONified and sent to the client.
+    #     serializer = self.serializer_class(request.user)
+
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # def update(self, request, *args, **kwargs):
+    #     serializer_data = request.data.get('user', {})
+
+    #     # Here is that serialize, validate, save pattern we talked about
+    #     # before.
+    #     serializer = self.serializer_class(
+    #         request.user, data=serializer_data, partial=True
+    #     )
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
