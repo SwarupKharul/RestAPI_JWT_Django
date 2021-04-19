@@ -148,5 +148,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 
+SIMPLE_JWT = {
+'AUTH_HEADER_TYPES': ('JWT','Bearer',),
+}
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
