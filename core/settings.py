@@ -136,6 +136,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # Permissions:
@@ -151,5 +152,3 @@ CORS_ALLOWED_ORIGINS = [
 SIMPLE_JWT = {
 'AUTH_HEADER_TYPES': ('JWT','Bearer',),
 }
-
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
