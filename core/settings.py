@@ -131,7 +131,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -139,16 +139,42 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
-# Permissions:
-# AllowAny
-# IsAuthenticated
-# IsAdminUser
-# IsAuthenticatedOrReadOnly
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 
 SIMPLE_JWT = {
 'AUTH_HEADER_TYPES': ('JWT','Bearer',),
+'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sk2todos@gmail.com'
+EMAIL_HOST_PASSWORD = 'pwtlowkqnnttxtvb'
+EMAIL_USE_TLS = True
+
+DJOSER = {
+    'LOGIN_FIELD' : 'email',
+    'USER_CREATE_PASSWORD_RETYPE' : True,
+    'SET_USERNAME_RETYPE' : True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION' : True,
+    'USERNAME_RESET_CONFIRM_URL' : 'email/reset/confirm/{uid}/{token}',
+    'SET_PASSWORD_RETYPE' : True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION' : True,
+    'PASSWORD_RESET_CONFIRM_URL' : 'password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL' : 'activate/{uid}/{token}',
+    'SEND_CONFIRMATION_EMAIL' : True,
+    'SEND_ACTIVATION_EMAIL' : True,
+        'SERIALIZERS': {
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'user': 'users.serializers.UserCreateSerializer',
+        'current_user': 'users.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    }
+    
+}
+
+AUTH_USER_MODEL = 'users.User'
